@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anders Consult · Helcyon Capital — Die Longevity-Lücke</title>
+    <meta name="description" content="Strategieberatung für Hersteller und Handel, die die wichtigste neue Konsumgüterkategorie der nächsten Dekade gestalten wollen.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DejaVu+Serif:ital,wght@0,400;0,700;1,400;1,700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            /* ── CI Colors from Whitepaper ── */
+            --navy: #1e2a3a;
+            --navy-deep: #161f2d;
+            --navy-light: #2a3a4e;
+            --cream: #f5f0ea;
+            --cream-dark: #ede7df;
+            --white: #ffffff;
+            --blue-accent: #4a7ab5;      /* Whitepaper italic/accent blue */
+            --blue-light: #6b92c4;
+            --blue-muted: #7a92b8;
+            --text-dark: #1a1a1a;         /* WP body text - near black */
+            --text-body: #333333;         /* WP body copy */
+            --text-muted: #6b7b8d;
+            --text-light: #b0bec5;
+            --text-label: #555555;        /* WP labels/captions */
+            --border-light: #d8d0c6;
+            --border-dark: #3a4a5e;
+
+            /* ── CI Fonts ── */
+            --serif: 'DejaVu Serif', 'Georgia', serif;
+            --sans: 'Open Sans', 'Helvetica Neue', sans-serif;
+            --sans-ui: 'IBM Plex Sans', 'Open Sans', sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--sans);
+            color: var(--text-body);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        img { max-width: 100%; display: block; }
+        a { text-decoration: none; color: inherit; }
+
+        /* ═══════════════════════════════════════════════════════
+           NAVIGATION
+        ═══════════════════════════════════════════════════════ */
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1.1rem 3rem;
+            background: rgba(22, 31, 45, 0.94);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .nav-brand {
+            font-family: var(--sans-ui);
+            font-size: 0.68rem;
+            font-weight: 500;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: var(--text-light);
+        }
+        .nav-links {
+            display: flex; align-items: center; gap: 2.5rem;
+            list-style: none;
+        }
+        .nav-links a {
+            font-family: var(--sans);
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: var(--text-light);
+            transition: color 0.25s;
+        }
+        .nav-links a:hover { color: var(--white); }
+        .nav-cta {
+            font-size: 0.82rem !important;
+            padding: 0.5rem 1.4rem;
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 2px;
+            transition: all 0.25s !important;
+        }
+        .nav-cta:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.4);
+        }
+        .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; }
+        .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--text-light); margin: 5px 0; transition: 0.3s; }
+
+        /* ═══════════════════════════════════════════════════════
+           SECTION LABEL — matches WP chapter labels
+           Font: IBM Plex Sans, weight 500, spaced uppercase
+        ═══════════════════════════════════════════════════════ */
+        .section-label {
+            font-family: var(--sans-ui);
+            font-size: 0.68rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+        .section-label--light { color: var(--text-light); }
+        .section-label--dark { color: var(--text-muted); }
+
+        /* ═══════════════════════════════════════════════════════
+           HEADING — DejaVu Serif, light weight
+           Italic words in blue-accent (matching WP style)
+        ═══════════════════════════════════════════════════════ */
+        .heading-xl {
+            font-family: var(--serif);
+            font-weight: 400;
+            line-height: 1.15;
+        }
+        .heading-xl em, .heading-xl i {
+            font-style: italic;
+            color: var(--blue-accent);
+        }
+
+        /* ═══════════════════════════════════════════════════════
+           BUTTONS
+        ═══════════════════════════════════════════════════════ */
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            font-family: var(--sans);
+            font-size: 0.88rem;
+            font-weight: 500;
+            padding: 0.85rem 2rem;
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn--outline { background: transparent; color: var(--white); }
+        .btn--outline:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.4); }
+        .btn--filled { background: var(--navy-light); color: var(--white); border-color: var(--navy-light); }
+        .btn--filled:hover { background: var(--blue-accent); border-color: var(--blue-accent); }
+        .btn--dark { background: transparent; color: var(--text-dark); border-color: var(--border-light); }
+        .btn--dark:hover { background: var(--text-dark); color: var(--white); }
+        .btn--submit {
+            background: var(--blue-accent); color: var(--white); border: none;
+            width: 100%; justify-content: center; padding: 1rem; font-size: 0.9rem;
+        }
+        .btn--submit:hover { background: var(--navy); }
+        .btn--submit-cream {
+            background: #9a9080; color: var(--white); border: none;
+            width: 100%; justify-content: center; padding: 1rem; font-size: 0.9rem;
+        }
+        .btn--submit-cream:hover { background: var(--text-dark); }
+
+        /* ═══════════════════════════════════════════════════════
+           HERO — Uses WP cover background image
+        ═══════════════════════════════════════════════════════ */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex; flex-direction: column; justify-content: flex-end;
+            padding: 0 3rem 5rem;
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute; inset: 0; z-index: 0;
+            background-color: #2a3545;
+            background-image: url('images/hero-bg.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+        .hero-bg::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(180deg, rgba(22,31,45,0.6) 0%, rgba(22,31,45,0.35) 40%, rgba(22,31,45,0.7) 100%);
+        }
+        .hero-content {
+            position: relative; z-index: 1;
+            max-width: 720px;
+        }
+        .hero-content .section-label {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            opacity: 0; animation: fadeUp 0.8s ease 0.3s forwards;
+        }
+        .hero h1 {
+            font-size: clamp(2.8rem, 5.5vw, 4.2rem);
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            opacity: 0; animation: fadeUp 0.8s ease 0.5s forwards;
+        }
+        .hero-subtitle {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: 1.05rem;
+            color: rgba(255,255,255,0.75);
+            line-height: 1.7;
+            max-width: 560px;
+            margin-bottom: 2.5rem;
+            opacity: 0; animation: fadeUp 0.8s ease 0.7s forwards;
+        }
+        .hero-buttons {
+            display: flex; gap: 1rem; flex-wrap: wrap;
+            opacity: 0; animation: fadeUp 0.8s ease 0.9s forwards;
+        }
+
+        /* ── Marquee ── */
+        .marquee-bar {
+            background: var(--navy-deep);
+            border-top: 1px solid rgba(255,255,255,0.06);
+            overflow: hidden; padding: 1rem 0;
+        }
+        .marquee-track {
+            display: flex; white-space: nowrap;
+            animation: marquee 30s linear infinite;
+        }
+        .marquee-text {
+            font-family: var(--sans-ui);
+            font-size: 0.68rem; font-weight: 500;
+            letter-spacing: 0.35em; text-transform: uppercase;
+            color: var(--text-light); opacity: 0.4;
+            padding: 0 3rem;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* ═══════════════════════════════════════════════════════
+           ÜBER UNS
+        ═══════════════════════════════════════════════════════ */
+        .about {
+            background: var(--cream);
+            padding: 6rem 3rem;
+        }
+        .about-inner { max-width: 1100px; margin: 0 auto; }
+        .about h2 {
+            font-size: clamp(2rem, 3.5vw, 2.8rem);
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+        .about-intro {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: 1rem;
+            color: var(--text-body);
+            line-height: 1.75;
+            max-width: 680px;
+            margin-bottom: 3.5rem;
+        }
+        .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+        .team-card { display: flex; flex-direction: column; align-items: flex-start; }
+        .team-avatar {
+            width: 180px; height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(74,122,181,0.12);
+            margin-bottom: 1.5rem;
+        }
+        .team-role-label {
+            font-family: var(--sans-ui);
+            font-size: 0.6rem; font-weight: 500;
+            letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 0.35rem;
+        }
+        .team-name {
+            font-family: var(--serif);
+            font-size: 1.35rem; font-weight: 400;
+            color: var(--text-dark);
+            margin-bottom: 0.25rem;
+        }
+        .team-title {
+            font-family: var(--sans-ui);
+            font-size: 0.78rem; font-style: italic;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+        }
+        .team-bio {
+            font-family: var(--sans);
+            font-size: 0.85rem;
+            color: var(--text-body);
+            line-height: 1.7;
+            margin-bottom: 0.75rem;
+            text-align: justify;
+        }
+        .team-email {
+            font-family: var(--sans);
+            font-size: 0.82rem;
+            color: var(--blue-accent);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+        .team-email:hover { color: var(--text-dark); }
+
+        .logos-section {
+            margin-top: 4rem; padding-top: 3rem;
+            border-top: 1px solid rgba(0,0,0,0.06);
+        }
+        .logos-label {
+            font-family: var(--sans-ui);
+            font-size: 0.6rem; font-weight: 600;
+            letter-spacing: 0.28em; text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+        .logos-list {
+            display: flex; flex-wrap: wrap; gap: 1.5rem 2.5rem;
+            align-items: center;
+        }
+        .logos-list img {
+            height: 28px;
+            width: auto;
+            opacity: 0.55;
+            filter: grayscale(100%);
+            transition: opacity 0.3s, filter 0.3s;
+        }
+        .logos-list img:hover {
+            opacity: 0.85;
+            filter: grayscale(0%);
+        }
+
+        /* ═══════════════════════════════════════════════════════
+           LEISTUNGEN
+        ═══════════════════════════════════════════════════════ */
+        .leistungen {
+            background: var(--white);
+            padding: 6rem 3rem;
+        }
+        .leistungen-inner { max-width: 1100px; margin: 0 auto; }
+        .leistungen h2 {
+            font-size: clamp(2rem, 3.5vw, 2.8rem);
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+        .leistungen-subtitle {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: 1rem;
+            color: var(--text-body);
+            line-height: 1.7;
+            margin-bottom: 3.5rem;
+        }
+        .leistungen-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .leistung-card {
+            background: var(--cream);
+            border: 1px solid rgba(0,0,0,0.05);
+            border-radius: 4px;
+            padding: 3rem;
+        }
+        .leistung-num {
+            font-family: var(--serif);
+            font-size: 2.5rem; font-weight: 400;
+            color: var(--cream-dark);
+            margin-bottom: 0.5rem;
+        }
+        .leistung-tag {
+            font-family: var(--sans-ui);
+            font-size: 0.62rem; font-weight: 600;
+            letter-spacing: 0.22em; text-transform: uppercase;
+            color: var(--blue-accent);
+            margin-bottom: 1rem;
+        }
+        .leistung-card h3 {
+            font-family: var(--serif);
+            font-size: 1.5rem; font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1.25rem;
+            line-height: 1.3;
+        }
+        .leistung-card h3 i {
+            font-weight: 400;
+            color: var(--blue-accent);
+        }
+        .leistung-desc {
+            font-family: var(--sans);
+            font-size: 0.9rem;
+            color: var(--text-body);
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+        .leistung-list {
+            list-style: none; display: flex; flex-direction: column;
+            gap: 0.7rem; margin-bottom: 2rem;
+        }
+        .leistung-list li {
+            font-family: var(--sans);
+            font-size: 0.88rem;
+            color: var(--text-body);
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .leistung-list li::before {
+            content: '→'; position: absolute; left: 0;
+            color: var(--blue-accent);
+        }
+
+        /* ═══════════════════════════════════════════════════════
+           WHITEPAPER — Dark section
+        ═══════════════════════════════════════════════════════ */
+        .whitepaper {
+            background: var(--navy);
+            color: var(--white);
+            padding: 6rem 3rem;
+        }
+        .whitepaper-inner {
+            max-width: 1100px; margin: 0 auto;
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 4rem; align-items: start;
+        }
+        .whitepaper-left .section-label { color: var(--text-light); }
+        .whitepaper h2 {
+            font-size: clamp(2rem, 3.5vw, 2.8rem);
+            color: var(--white);
+            margin-bottom: 1.25rem;
+        }
+        .whitepaper-desc {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.7;
+            margin-bottom: 2.5rem;
+        }
+
+        /* WP Cover Image */
+        .wp-cover-img {
+            width: 100%; max-width: 380px;
+            border-radius: 4px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            margin-bottom: 2.5rem;
+        }
+
+        .whitepaper-toc { list-style: none; display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem; }
+        .whitepaper-toc li {
+            display: flex; align-items: baseline; gap: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .whitepaper-toc li:last-child { border-bottom: none; }
+        .toc-num {
+            font-family: var(--serif);
+            font-size: 0.85rem;
+            color: var(--blue-accent);
+            font-weight: 700;
+            min-width: 1.5rem;
+        }
+        .toc-title {
+            font-family: var(--sans);
+            font-size: 0.9rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        /* ── Form Card ── */
+        .form-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 4px;
+            padding: 2.5rem;
+        }
+        .form-card h3 {
+            font-family: var(--serif);
+            font-size: 1.5rem; font-weight: 700;
+            color: var(--white);
+            margin-bottom: 2rem;
+        }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .form-group { margin-bottom: 1.25rem; }
+        .form-group.full { grid-column: 1 / -1; }
+        .form-label {
+            display: block;
+            font-family: var(--sans-ui);
+            font-size: 0.65rem; font-weight: 600;
+            letter-spacing: 0.18em; text-transform: uppercase;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+        .form-label--dark { color: var(--text-muted); }
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            font-family: var(--sans);
+            font-size: 0.9rem;
+            padding: 0.85rem 1rem;
+            border-radius: 3px;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.04);
+            color: var(--white);
+            transition: border-color 0.25s;
+            outline: none;
+        }
+        .form-input::placeholder, .form-textarea::placeholder { color: var(--text-light); opacity: 0.5; }
+        .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--blue-accent); }
+        .form-select {
+            appearance: none; cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236b92c4' d='M1.41 0L6 4.58 10.59 0 12 1.41l-6 6-6-6z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 1rem center;
+        }
+        .form-select option { background: var(--navy); color: var(--white); }
+
+        /* Cream inputs */
+        .form-input--cream, .form-select--cream, .form-textarea--cream {
+            border-color: var(--border-light);
+            background: rgba(0,0,0,0.02);
+            color: var(--text-dark);
+        }
+        .form-input--cream::placeholder, .form-textarea--cream::placeholder { color: var(--text-muted); opacity: 0.6; }
+        .form-input--cream:focus, .form-select--cream:focus, .form-textarea--cream:focus { border-color: var(--blue-accent); }
+
+        /* Consent */
+        .consent-row { display: flex; align-items: flex-start; gap: 0.75rem; margin: 1.5rem 0; }
+        .consent-row input[type="checkbox"] {
+            appearance: none; width: 18px; height: 18px; min-width: 18px;
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 2px;
+            background: rgba(255,255,255,0.04); cursor: pointer; margin-top: 2px;
+        }
+        .consent-row input[type="checkbox"]:checked {
+            background: var(--blue-accent); border-color: var(--blue-accent);
+        }
+        .consent-row input[type="checkbox"]:checked::after {
+            content: '✓'; display: flex; align-items: center; justify-content: center;
+            font-size: 12px; color: white; width: 100%; height: 100%;
+        }
+        .consent-row--cream input[type="checkbox"] { border-color: var(--border-light); background: transparent; }
+        .consent-text {
+            font-family: var(--sans);
+            font-size: 0.78rem; color: var(--text-light); line-height: 1.5;
+        }
+        .consent-text--dark { color: var(--text-muted); }
+        .consent-text a { color: var(--blue-accent); text-decoration: underline; text-underline-offset: 2px; }
+        .form-footer {
+            font-family: var(--sans);
+            text-align: center; font-size: 0.72rem;
+            color: var(--text-light); opacity: 0.6; margin-top: 1rem;
+        }
+        .form-footer--dark { color: var(--text-muted); }
+
+        /* Success */
+        .form-success { display: none; text-align: center; padding: 2rem 1rem; }
+        .form-success.active { display: block; }
+        .form-success-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .form-success h4 { font-family: var(--serif); font-size: 1.3rem; font-weight: 700; margin-bottom: 0.75rem; }
+        .form-success p { font-family: var(--sans); font-size: 0.88rem; line-height: 1.6; opacity: 0.7; }
+
+        /* ═══════════════════════════════════════════════════════
+           KONTAKT
+        ═══════════════════════════════════════════════════════ */
+        .kontakt {
+            background: var(--cream);
+            padding: 6rem 3rem;
+            border-top: 1px solid rgba(0,0,0,0.04);
+        }
+        .kontakt-inner {
+            max-width: 1100px; margin: 0 auto;
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 4rem; align-items: start;
+        }
+        .kontakt h2 {
+            font-size: clamp(2rem, 3.5vw, 2.8rem);
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+        .kontakt-desc {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: 0.95rem;
+            color: var(--text-body);
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+        .kontakt-email {
+            font-family: var(--sans);
+            font-size: 0.92rem;
+            color: var(--blue-accent);
+            text-decoration: underline; text-underline-offset: 3px;
+            display: block; margin-bottom: 0.5rem;
+        }
+        .kontakt-email:hover { color: var(--text-dark); }
+
+        .kontakt-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            margin-top: 2.5rem;
+        }
+        .kontakt-person {}
+        .kontakt-company {
+            font-family: var(--sans-ui);
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--blue-accent);
+            margin-bottom: 0.5rem;
+        }
+        .kontakt-name {
+            font-family: var(--serif);
+            font-size: 1.4rem;
+            font-weight: 400;
+            color: var(--text-dark);
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .linkedin-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 3px;
+            background: var(--text-muted);
+            color: var(--white);
+            font-family: var(--sans-ui);
+            font-size: 0.72rem;
+            font-weight: 700;
+            font-style: normal;
+            text-decoration: none;
+            transition: background 0.25s;
+        }
+        .linkedin-icon:hover {
+            background: #0077b5;
+        }
+        .kontakt-role {
+            font-family: var(--sans);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.35rem;
+        }
+        .kontakt-form-card {
+            background: var(--white);
+            border: 1px solid rgba(0,0,0,0.06);
+            border-radius: 4px;
+            padding: 2.5rem;
+        }
+        .kontakt-form-card h3 {
+            font-family: var(--serif);
+            font-size: 1.5rem; font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 2rem;
+        }
+        .form-textarea { resize: vertical; min-height: 120px; }
+
+        /* ═══════════════════════════════════════════════════════
+           FOOTER
+        ═══════════════════════════════════════════════════════ */
+        .footer {
+            background: var(--navy-deep);
+            padding: 2.5rem 3rem;
+            display: flex; align-items: center; justify-content: space-between;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .footer-brand {
+            font-family: var(--sans-ui);
+            font-size: 0.68rem; letter-spacing: 0.2em;
+            text-transform: uppercase; color: var(--text-light); opacity: 0.5;
+        }
+        .footer-links { display: flex; gap: 2rem; }
+        .footer-links a {
+            font-family: var(--sans);
+            font-size: 0.78rem; color: var(--text-light); opacity: 0.5;
+            transition: opacity 0.25s;
+        }
+        .footer-links a:hover { opacity: 1; }
+
+        /* ═══════════════════════════════════════════════════════
+           ANIMATIONS
+        ═══════════════════════════════════════════════════════ */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .reveal {
+            opacity: 0; transform: translateY(24px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ═══════════════════════════════════════════════════════
+           RESPONSIVE
+        ═══════════════════════════════════════════════════════ */
+        @media (max-width: 900px) {
+            .nav { padding: 1rem 1.5rem; }
+            .nav-links-desktop { display: none; }
+            .nav-toggle { display: block; }
+            .nav-mobile {
+                display: none; position: absolute; top: 100%; left: 0; right: 0;
+                background: var(--navy-deep); padding: 1.5rem;
+                flex-direction: column; gap: 1rem;
+                border-bottom: 1px solid rgba(255,255,255,0.06);
+            }
+            .nav-mobile.open { display: flex; }
+            .nav-mobile a { font-size: 0.9rem; color: var(--text-light); padding: 0.5rem 0; }
+            .hero { padding: 0 1.5rem 4rem; }
+            .hero h1 { font-size: 2.4rem; }
+            .about { padding: 4rem 1.5rem; }
+            .team-grid { grid-template-columns: 1fr; }
+            .leistungen { padding: 4rem 1.5rem; }
+            .leistungen-grid { grid-template-columns: 1fr; }
+            .whitepaper { padding: 4rem 1.5rem; }
+            .whitepaper-inner { grid-template-columns: 1fr; gap: 3rem; }
+            .kontakt { padding: 4rem 1.5rem; }
+            .kontakt-inner { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
+        }
+
+        /* ═══════════════════════════════════════════════════════
+           ACTIVECAMPAIGN FORM OVERRIDES
+        ═══════════════════════════════════════════════════════ */
+        #_form_5_ { font-size:14px; line-height:1.6; margin:0; box-shadow:none; }
+        #_form_5_ { position:relative; text-align:left; padding:2.5rem; box-sizing:border-box; background:rgba(255,255,255,0.04) !important; border:1px solid rgba(255,255,255,0.08) !important; border-radius:4px !important; max-width:100% !important; color:#fff !important; }
+        #_form_5_ ._form-content { margin-bottom:0; }
+        #_form_5_ ._form-title { font-family: var(--serif) !important; font-size:1.5rem !important; font-weight:700 !important; color:#fff !important; margin-bottom:2rem !important; padding:0 !important; }
+        #_form_5_ ._form-label { font-family: var(--sans-ui) !important; font-size:0.65rem !important; font-weight:600 !important; letter-spacing:0.18em !important; text-transform:uppercase !important; color:#b0bec5 !important; margin-bottom:0.5rem !important; }
+        #_form_5_ input[type="text"], #_form_5_ input[type="email"], #_form_5_ input[type="tel"], #_form_5_ textarea, #_form_5_ select { width:100% !important; font-family: var(--sans) !important; font-size:0.9rem !important; padding:0.85rem 1rem !important; border-radius:3px !important; border:1px solid rgba(255,255,255,0.12) !important; background:rgba(255,255,255,0.04) !important; color:#fff !important; outline:none !important; transition:border-color 0.25s !important; -webkit-appearance:none !important; appearance:none !important; box-sizing:border-box !important; height:auto !important; }
+        #_form_5_ input[type="text"]:focus, #_form_5_ input[type="email"]:focus, #_form_5_ select:focus { border-color: var(--blue-accent) !important; }
+        #_form_5_ input::placeholder { color:#b0bec5 !important; opacity:0.5 !important; }
+        #_form_5_ select { cursor:pointer !important; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236b92c4' d='M1.41 0L6 4.58 10.59 0 12 1.41l-6 6-6-6z'/%3E%3C/svg%3E") !important; background-repeat:no-repeat !important; background-position:right 1rem center !important; padding-right:2.5rem !important; }
+        #_form_5_ select option { background:#1e2a3a !important; color:#fff !important; }
+        #_form_5_ ._form_element { position:relative; margin-bottom:1.25rem !important; max-width:100%; }
+        #_form_5_ ._field-wrapper { position:relative; }
+        #_form_5_ ._row._checkbox-radio { display:flex !important; align-items:flex-start !important; gap:0.75rem !important; margin:1.5rem 0 !important; }
+        #_form_5_ input[type="checkbox"] { appearance:none !important; -webkit-appearance:none !important; width:18px !important; height:18px !important; min-width:18px !important; border:1px solid rgba(255,255,255,0.2) !important; border-radius:2px !important; background:rgba(255,255,255,0.04) !important; cursor:pointer !important; margin-top:2px !important; padding:0 !important; transition:all 0.2s !important; }
+        #_form_5_ input[type="checkbox"]:checked { background: var(--blue-accent) !important; border-color: var(--blue-accent) !important; }
+        #_form_5_ ._checkbox-radio span label { font-family: var(--sans) !important; font-size:0.78rem !important; font-weight:400 !important; letter-spacing:0 !important; text-transform:none !important; color:#b0bec5 !important; line-height:1.5 !important; display:inline !important; }
+        #_form_5_ ._checkbox-radio span label a { color: var(--blue-accent) !important; text-decoration:underline !important; }
+        #_form_5_ ._form-fieldset { border:0; padding:0; margin:0; }
+        #_form_5_ ._form-fieldset legend { display:none; }
+        #_form_5_ ._submit { font-family: var(--sans) !important; font-size:0.9rem !important; font-weight:500 !important; width:100% !important; padding:1rem !important; background: var(--blue-accent) !important; color:#fff !important; border:none !important; border-radius:3px !important; cursor:pointer !important; transition:background 0.3s !important; text-align:center !important; }
+        #_form_5_ ._submit:hover { background: var(--navy) !important; }
+        #_form_5_ ._form-branding { display:none !important; }
+        #_form_5_ ._form-thank-you { font-family: var(--serif) !important; font-size:1.1rem !important; color:#fff !important; text-align:center !important; padding:2rem 1rem !important; }
+        #_form_5_ ._error-inner { font-size:0.78rem !important; color:#e57373 !important; margin-top:0.35rem !important; background:#3a2020 !important; border-radius:4px !important; padding:8px 12px !important; }
+        #_form_5_ input[type="checkbox"]._has_error { border-color:#e57373 !important; }
+        #_form_5_ .field-required { color: var(--blue-accent) !important; }
+        #_form_5_ ._html-code { display:none; }
+    </style>
+</head>
+<body>
+
+    <!-- ═══ NAVIGATION ═══ -->
+    <nav class="nav">
+        <div class="nav-brand">Anders Consult · Helcyon Capital</div>
+        <ul class="nav-links nav-links-desktop">
+            <li><a href="#about">Über uns</a></li>
+            <li><a href="#leistungen">Leistungen</a></li>
+            <li><a href="#whitepaper">Whitepaper "Die Longevity-Lücke"</a></li>
+            <li><a href="#kontakt" class="nav-cta">Kontakt</a></li>
+        </ul>
+        <button class="nav-toggle" onclick="document.querySelector('.nav-mobile').classList.toggle('open')" aria-label="Menü">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-mobile">
+            <a href="#about" onclick="this.parentElement.classList.remove('open')">Über uns</a>
+            <a href="#leistungen" onclick="this.parentElement.classList.remove('open')">Leistungen</a>
+            <a href="#whitepaper" onclick="this.parentElement.classList.remove('open')">Whitepaper "Die Longevity-Lücke"</a>
+            <a href="#kontakt" onclick="this.parentElement.classList.remove('open')">Kontakt</a>
+        </div>
+    </nav>
+
+    <!-- ═══ HERO — uses WP cover background ═══ -->
+    <section class="hero" id="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <p class="section-label section-label--light">Consumer Longevity Advisory</p>
+            <h1 class="heading-xl">Wir schließen die<br>Longevity-<i>Lücke.</i></h1>
+            <p class="hero-subtitle">
+                Strategieberatung für Hersteller und Handel, die die wichtigste neue Konsumgüterkategorie der nächsten Dekade gestalten wollen — nicht nur beobachten.
+            </p>
+            <div class="hero-buttons">
+                <a href="#leistungen" class="btn btn--outline">Unsere Leistungen</a>
+                <a href="#whitepaper" class="btn btn--filled">Whitepaper herunterladen</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ MARQUEE ═══ -->
+    <div class="marquee-bar">
+        <div class="marquee-track">
+            <span class="marquee-text">Consumer Longevity · Mai 2026</span>
+            <span class="marquee-text">Consumer Longevity · Mai 2026</span>
+            <span class="marquee-text">Consumer Longevity · Mai 2026</span>
+            <span class="marquee-text">Consumer Longevity · Mai 2026</span>
+            <span class="marquee-text">Consumer Longevity · Mai 2026</span>
+            <span class="marquee-text">Consumer Longevity · Mai 2026</span>
+            <span class="marquee-text">Consumer Longevity · Mai 2026</span>
+            <span class="marquee-text">Consumer Longevity · Mai 2026</span>
+        </div>
+    </div>
+
+    <!-- ═══ ÜBER UNS ═══ -->
+    <section class="about" id="about">
+        <div class="about-inner">
+            <p class="section-label section-label--dark reveal">Über uns</p>
+            <h2 class="heading-xl reveal">Zwei Perspektiven. <i>Eine Mission.</i></h2>
+            <p class="about-intro reveal">
+                Consumer Longevity wird die wichtigste neue Konsumgüterkategorie der nächsten zehn Jahre — und sie wird nicht in den Spielregeln etablierter Kategorien gewonnen. Wir verbinden Konsumgüter-Erfahrung mit Longevity-Expertise, um Hersteller und Handel beim Aufbau dieser Kategorie zu begleiten.
+            </p>
+            <div class="team-grid">
+                <div class="team-card reveal">
+                    <img src="images/portrait-burkhard.png" alt="Burkhard Anders" class="team-avatar">
+                    <div class="team-role-label">Geschäftsführer · Anders Consult</div>
+                    <div class="team-name">Burkhard Anders</div>
+                    <div class="team-title">Go-to-Market Strategie · FMCG & Healthcare Advisor · Commercial Expert</div>
+                    <p class="team-bio">
+                        Burkhard Anders ist Unternehmensberater und ehemaliger Health & Beauty Executive mit ausgewiesener Expertise im Aufbau und der Skalierung von Healthcare- und Konsumgütermarken in europäischen Märkten. Mit nachweisbarem Track Record in Vertrieb, Marketing, Go-to-Market-Strategie und kommerzieller Umsetzung unterstützt er FMCG- und Healthcare-Unternehmen dabei, Strategie in nachhaltiges Wachstum zu übersetzen. Sein Fokus liegt auf Markteintritt, Distributionsaufbau und Geschäftsbeschleunigung stets mit klarem Blick auf operative Exzellenz und profitable Performance. Sein Standort ist in Deutschland.
+                    </p>
+                </div>
+                <div class="team-card reveal" style="transition-delay: 0.12s;">
+                    <img src="images/portrait-onur.png" alt="Onur Erdoğan" class="team-avatar">
+                    <div class="team-role-label">Founding Partner · Helcyon Capital</div>
+                    <div class="team-name">Onur Erdoğan</div>
+                    <div class="team-title">Longevity & Healthcare Expert · Growth Architect · Brand Strategist</div>
+                    <p class="team-bio">
+                        Onur Erdoğan ist transformationsorientierter Unternehmer und C-Level-Executive mit tiefer Expertise in der Skalierung wissenschaftlich fundierter Consumer Brands an der Schnittstelle von Biotech, Healthcare und Longevity. Mit nachweisbarem Track Record in Brand- und Commercial-Strategie baut und beschleunigt er Geschäfte, die wissenschaftliche Innovation in nachhaltigen kommerziellen Erfolg übersetzen. Er begleitet wachstumsstarke Unternehmen bei Markenstrategie, Markteintritt und strategischer Repositionierung, stets mit klarem Fokus auf langfristige Wertschöpfung und Konsumentenvertrauen in Health-bezogenen Märkten. Sein Standort ist die Schweiz.
+                    </p>
+                </div>
+            </div>
+            <div class="logos-section reveal">
+                <div class="logos-label">Berufliche Stationen & Erfahrungen</div>
+                <div class="logos-list">
+                    <img src="images/logo-henkel.png" alt="Henkel">
+                    <img src="images/logo-loreal.png" alt="L'Oréal">
+                    <img src="images/logo-estee_lauder.png" alt="Estée Lauder Companies">
+                    <img src="images/logo-johnson_johnson.png" alt="Johnson & Johnson">
+                    <img src="images/logo-kenvue.png" alt="Kenvue">
+                    <img src="images/logo-alpex_pharma.png" alt="Alpex Pharma">
+                    <img src="images/logo-m_logo.png" alt="">
+                    <img src="images/logo-helcyon_capital.png" alt="Helcyon Capital">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ LEISTUNGEN ═══ -->
+    <section class="leistungen" id="leistungen">
+        <div class="leistungen-inner">
+            <p class="section-label section-label--dark reveal">Unsere Leistungen</p>
+            <h2 class="heading-xl reveal">Zwei Wege, um die <i>Lücke</i> zu schließen.</h2>
+            <p class="leistungen-subtitle reveal">
+                Wir verbinden tiefe Erfahrung im Konsumgüter-Mainstream mit unternehmerischer Expertise am Longevity-Frontier.
+            </p>
+            <div class="leistungen-grid">
+                <div class="leistung-card reveal">
+                    <div class="leistung-num">01</div>
+                    <div class="leistung-tag">Für Longevity-Marken & Start-ups</div>
+                    <h3>Werden Sie Teil der Kategorie-<i>Lösung.</i></h3>
+                    <p class="leistung-desc">
+                        Wir wählen <strong>3–5</strong> der vielversprechendsten Longevity-Marken für eine exklusive strategische Partnerschaft aus. Gemeinsam machen wir Ihre Marke retail-ready und stellen sicher, dass sie ein aktiver Akteur bei der Entwicklung der Longevity-Kategorie im Einzelhandel werden.
+                    </p>
+                    <ul class="leistung-list">
+                        <li>Positionierung für den stationären Handel</li>
+                        <li>Kategorie-Integration und Regalstrategie</li>
+                        <li>Retail-Readiness-Audit und Go-to-Market-Plan</li>
+                        <li>Zugang zu unserem Händler-Netzwerk</li>
+                        <li>Marken- und Kommunikationsstrategie für den Massenmarkt</li>
+                    </ul>
+                    <a href="#kontakt" class="btn btn--dark">Für Partnerschaft bewerben →</a>
+                </div>
+                <div class="leistung-card reveal" style="transition-delay: 0.12s;">
+                    <div class="leistung-num">02</div>
+                    <div class="leistung-tag">Für CEOs & Geschäftsführer in Industrie & Handel</div>
+                    <h3>Verstehen Sie das <i>Spielfeld.</i></h3>
+                    <p class="leistung-desc">
+                        Unser 90-minütiges „State of the Category" Executive Briefing liefert die externe Sicht, die Sie benötigen — datengestützt und ohne Ihre vertrauliche Strategie zu diskutieren.
+                    </p>
+                    <ul class="leistung-list">
+                        <li>Marktdynamik und Wachstumsprojektionen</li>
+                        <li>Konsumentensegmente und Kaufverhalten</li>
+                        <li>Analyse der Disruptoren und neuen Player</li>
+                        <li>Distributionsmuster und Kanal-Shifts</li>
+                        <li>Strategische Handlungsoptionen</li>
+                    </ul>
+                    <a href="#kontakt" class="btn btn--dark">Executive Briefing anfragen →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ WHITEPAPER ═══ -->
+    <section class="whitepaper" id="whitepaper">
+        <div class="whitepaper-inner">
+            <div class="whitepaper-left reveal">
+                <p class="section-label section-label--light">Whitepaper N° 01 · Mai 2026</p>
+                <h2 class="heading-xl">Die Longevity-<i>Lücke.</i></h2>
+                <p class="whitepaper-desc">
+                    16 Seiten Analyse, Marktdaten und eine konkrete 5-Schritte-Roadmap für Hersteller und Handel. Warum Consumer Longevity die wichtigste neue Konsumgüterkategorie der nächsten Dekade wird.
+                </p>
+
+                <img src="images/whitepaper-cover.jpg" alt="Die Longevity-Lücke — Whitepaper Cover" class="wp-cover-img">
+            </div>
+
+            <div class="whitepaper-right reveal" style="transition-delay: 0.15s;">
+                <ul class="whitepaper-toc">
+                    <li><span class="toc-num">01</span><span class="toc-title">Vom Dinosaurier zum Einhorn — Eine Industrie im Wandel</span></li>
+                    <li><span class="toc-num">02</span><span class="toc-title">Was ist Longevity? — Lebensspanne, Gesundheitsspanne, 9 Hallmarks</span></li>
+                    <li><span class="toc-num">03</span><span class="toc-title">Die Anatomie einer neuen Kategorie — Distribution, Erlebnis, Erfolg</span></li>
+                    <li><span class="toc-num">04</span><span class="toc-title">Zukunftsmarkt Consumer Longevity — Marktdaten & Zielgruppen</span></li>
+                    <li><span class="toc-num">05</span><span class="toc-title">Die Roadmap — Fünf Schritte vom Reagieren zum Gestalten</span></li>
+                </ul>
+                <!-- ActiveCampaign Form Embed -->
+                <div id="ac-form-container">
+                  <form method="POST" action="https://anders-consult.activehosted.com/proc.php" id="_form_5_" class="_form _form_5 _inline-form _dark" novalidate data-styles-version="5">
+                    <input type="hidden" name="u" value="5" />
+                    <input type="hidden" name="f" value="5" />
+                    <input type="hidden" name="s" />
+                    <input type="hidden" name="c" value="0" />
+                    <input type="hidden" name="m" value="0" />
+                    <input type="hidden" name="act" value="sub" />
+                    <input type="hidden" name="v" value="2" />
+                    <input type="hidden" name="or" value="a05ec71e-71de-46b0-84dd-7638db27db01" />
+                    <div class="_form-content">
+                      <div class="_form_element _field_header _full_width _clear">
+                        <h2 class="_form-title">Kostenlos herunterladen</h2>
+                      </div>
+                      <div class="_form_element _x30915029 _full_width">
+                        <label for="firstname" class="_form-label">Vorname</label>
+                        <div class="_field-wrapper">
+                          <input type="text" id="firstname" name="firstname" placeholder="Vorname" />
+                        </div>
+                      </div>
+                      <div class="_form_element _x48125174 _full_width">
+                        <label for="lastname" class="_form-label">Nachname</label>
+                        <div class="_field-wrapper">
+                          <input type="text" id="lastname" name="lastname" placeholder="Nachname" />
+                        </div>
+                      </div>
+                      <div class="_form_element _field_email _full_width">
+                        <label for="email" class="_form-label">Geschäftliche E-Mail<span class="field-required"> *</span></label>
+                        <div class="_field-wrapper">
+                          <input type="text" id="email" name="email" placeholder="ihre@email.de" required/>
+                        </div>
+                      </div>
+                      <div class="_form_element _x09184400 _full_width">
+                        <label for="field[2]" class="_form-label">Unternehmen</label>
+                        <div class="_field-wrapper">
+                          <input type="text" id="field[2]" name="field[2]" value="" placeholder="Unternehmen" />
+                        </div>
+                      </div>
+                      <div class="_form_element _x33555667 _full_width">
+                        <label for="field[3]" class="_form-label">Ihre Rolle</label>
+                        <div class="_field-wrapper">
+                          <select name="field[3]" id="field[3]">
+                            <option selected>Bitte auswählen</option>
+                            <option value="C-Level / Geschäftsführung">C-Level / Geschäftsführung</option>
+                            <option value="VP / Director">VP / Director</option>
+                            <option value="Manager">Manager</option>
+                            <option value="Analyst / Specialist">Analyst / Specialist</option>
+                            <option value="Berater / Consultant">Berater / Consultant</option>
+                            <option value="Sonstiges">Sonstiges</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="_form_element _x76754118 _full_width">
+                        <fieldset class="_form-fieldset">
+                          <input data-autofill="false" type="hidden" id="field[4][]" name="field[4][]" value="~|">
+                          <div class="_row _checkbox-radio">
+                            <input id="field_4_consent" type="checkbox" name="field[4][]" required value="Ich stimme zu, dass Anders Consult und Helcyon Capital meine Daten zur Zusendung des Whitepapers und zur Kontaktaufnahme verwenden dürfen. Widerruf jederzeit möglich. Datenschutzhinweis">
+                            <span>
+                              <label for="field_4_consent">
+                                Ich stimme zu, dass Anders Consult und Helcyon Capital meine Daten zur Zusendung des Whitepapers und zur Kontaktaufnahme verwenden dürfen. Widerruf jederzeit möglich. <a href="#datenschutz">Datenschutzhinweis</a>
+                              </label>
+                            </span>
+                          </div>
+                        </fieldset>
+                      </div>
+                      <div class="_button-wrapper _full_width">
+                        <button id="_form_5_submit" class="_submit" type="submit">Whitepaper anfordern</button>
+                      </div>
+                      <div class="_clear-element"></div>
+                    </div>
+                    <div class="_form-thank-you" style="display:none;"></div>
+                  </form>
+                  <p class="form-footer" style="text-align:center;font-size:0.72rem;color:#b0bec5;opacity:0.6;margin-top:1rem;font-family:var(--sans);">Kein Spam. Abmeldung jederzeit. Ihre Daten werden nicht an Dritte weitergegeben.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ KONTAKT ═══ -->
+    <section class="kontakt" id="kontakt">
+        <div class="kontakt-inner">
+            <div class="reveal">
+                <p class="section-label section-label--dark">Kontakt</p>
+                <h2 class="heading-xl">Lassen Sie uns die Kategorie <i>gemeinsam</i> besetzen.</h2>
+                <p class="kontakt-desc">
+                    Ob Executive Briefing, strategische Partnerschaft oder ein erstes Sondierungsgespräch — wir freuen uns auf den Austausch. Schreiben Sie uns direkt oder nutzen Sie das Kontaktformular.
+                </p>
+                <div class="kontakt-cards">
+                    <div class="kontakt-person">
+                        <div class="kontakt-company">Anders Consult</div>
+                        <div class="kontakt-name">Burkhard Anders <a href="https://www.linkedin.com/in/burkhard-anders/" target="_blank" rel="noopener" class="linkedin-icon" aria-label="LinkedIn">in</a></div>
+                        <div class="kontakt-role">Geschäftsführer</div>
+                        <a href="mailto:burkhard.anders@anders-consult.com" class="kontakt-email">burkhard.anders@anders-consult.com</a>
+                    </div>
+                    <div class="kontakt-person">
+                        <div class="kontakt-company">Helcyon Capital</div>
+                        <div class="kontakt-name">Onur Erdoğan <a href="https://www.linkedin.com/in/onurerdogan/" target="_blank" rel="noopener" class="linkedin-icon" aria-label="LinkedIn">in</a></div>
+                        <div class="kontakt-role">Founding Partner</div>
+                        <a href="mailto:onur.erdogan@helcyon.ch" class="kontakt-email">onur.erdogan@helcyon.ch</a>
+                    </div>
+                </div>
+            </div>
+            <div class="kontakt-form-card reveal" style="transition-delay: 0.12s;">
+                <h3>Nachricht senden</h3>
+                <form id="kontaktForm">
+                    <div class="form-group">
+                        <label class="form-label form-label--dark">Name</label>
+                        <input type="text" class="form-input form-input--cream" name="name" placeholder="Vor- und Nachname" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label form-label--dark">E-Mail</label>
+                        <input type="email" class="form-input form-input--cream" name="email" placeholder="ihre@email.de" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label form-label--dark">Unternehmen</label>
+                        <input type="text" class="form-input form-input--cream" name="unternehmen" placeholder="Unternehmen">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label form-label--dark">Betreff</label>
+                        <input type="text" class="form-input form-input--cream" name="betreff" placeholder="Worum geht es?">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label form-label--dark">Nachricht</label>
+                        <textarea class="form-input form-textarea form-textarea--cream" name="nachricht" placeholder="Ihre Nachricht..." rows="5"></textarea>
+                    </div>
+                    <div class="consent-row consent-row--cream">
+                        <input type="checkbox" id="consentKontakt" name="consent" required>
+                        <label for="consentKontakt" class="consent-text consent-text--dark">
+                            Ich stimme der Verarbeitung meiner Daten zur Bearbeitung meiner Anfrage zu. <a href="#datenschutz">Datenschutzhinweis</a>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn--submit-cream">Nachricht senden</button>
+                </form>
+                <div class="form-success" id="kontaktSuccess">
+                    <div class="form-success-icon">✓</div>
+                    <h4 style="color: var(--text-dark);">Nachricht gesendet!</h4>
+                    <p style="color: var(--text-muted);">Vielen Dank für Ihre Nachricht. Wir melden uns in Kürze bei Ihnen.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ FOOTER ═══ -->
+    <footer class="footer">
+        <div class="footer-brand">© 2026 Anders Consult · Helcyon Capital</div>
+        <div class="footer-links">
+            <a href="#datenschutz">Datenschutz</a>
+            <a href="#impressum">Impressum</a>
+        </div>
+    </footer>
+
+    <!-- ═══ SCRIPTS ═══ -->
+    <script>
+        // Scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // TODO: Replace with your actual n8n webhook URLs
+        const WEBHOOK_WHITEPAPER = 'https://YOUR-N8N-INSTANCE.app/webhook/whitepaper-optin';
+        const WEBHOOK_KONTAKT = 'https://YOUR-N8N-INSTANCE.app/webhook/kontakt';
+
+        // ── ActiveCampaign Form Script ─────────────────────
+        window.cfields = {"2":"unternehmen","3":"ihre_rolle","4":"datenschutz"};
+        window._show_thank_you = function(id, message, trackcmp_url, email) {
+            var form = document.getElementById('_form_' + id + '_'), thank_you = form.querySelector('._form-thank-you');
+            form.querySelector('._form-content').style.display = 'none';
+            thank_you.innerHTML = '<div style="padding:2rem 1rem;text-align:center;"><div style="font-size:2.5rem;margin-bottom:1rem;">✉️</div><h4 style="font-family:var(--serif);font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:0.75rem;">Vielen Dank!</h4><p style="font-size:0.88rem;color:#b0bec5;line-height:1.6;">Wir haben Ihnen eine E-Mail zur Bestätigung gesendet. Bitte klicken Sie auf den Link, um das Whitepaper zu erhalten.</p></div>';
+            thank_you.style.display = 'block';
+            if (typeof window._form_callback !== 'undefined') window._form_callback(id);
+        };
+        window._show_error = function(id, message, html) {
+            var form = document.getElementById('_form_' + id + '_'),
+                err = document.createElement('div'),
+                button = form.querySelector('button[type="submit"]'),
+                old_error = form.querySelector('._form_error');
+            if (old_error) old_error.parentNode.removeChild(old_error);
+            err.innerHTML = message;
+            err.className = '_error-inner _form_error _no_arrow';
+            var wrapper = document.createElement('div');
+            wrapper.className = '_form-inner _show_be_error';
+            wrapper.appendChild(err);
+            button.parentNode.insertBefore(wrapper, button);
+            var submitButton = form.querySelector('[id^="_form"][id$="_submit"]');
+            submitButton.disabled = false;
+            submitButton.classList.remove('processing');
+        };
+        window._load_script = function(url, callback, isSubmit) {
+            var head = document.querySelector('head'), script = document.createElement('script'), r = false;
+            script.charset = 'utf-8';
+            script.src = url;
+            if (callback) {
+                script.onload = script.onreadystatechange = function() {
+                    if (!r && (!this.readyState || this.readyState == 'complete')) { r = true; callback(); }
+                };
+            }
+            script.onerror = function() {
+                if (isSubmit) {
+                    _show_error("5", "Übermittlung fehlgeschlagen. Bitte versuchen Sie es erneut.");
+                    var sb = document.querySelector('#_form_5_submit');
+                    sb.disabled = false; sb.classList.remove('processing');
+                }
+            }
+            head.appendChild(script);
+        };
+        (function() {
+            if (window.location.search.search("excludeform") !== -1) return false;
+            var form_to_submit = document.getElementById('_form_5_');
+            if (!form_to_submit) return;
+            var allInputs = form_to_submit.querySelectorAll('input, select, textarea'), tooltips = [], submitted = false;
+
+            var addEvent = function(element, event, func) {
+                if (element.addEventListener) { element.addEventListener(event, func); }
+                else { var oldFunc = element['on' + event]; element['on' + event] = function() { oldFunc.apply(this, arguments); func.apply(this, arguments); }; }
+            };
+            var remove_tooltips = function() { for (var i = 0; i < tooltips.length; i++) { tooltips[i].tip.parentNode.removeChild(tooltips[i].tip); } tooltips = []; };
+            var remove_tooltip = function(elem) { for (var i = 0; i < tooltips.length; i++) { if (tooltips[i].elem === elem) { tooltips[i].tip.parentNode.removeChild(tooltips[i].tip); tooltips.splice(i, 1); return; } } };
+            var create_tooltip = function(elem, text) {
+                var tooltip = document.createElement('div'), arrow = document.createElement('div'), inner = document.createElement('div'), new_tooltip = {};
+                tooltip.className = '_error'; arrow.className = '_error-arrow'; inner.className = '_error-inner'; inner.innerHTML = text;
+                tooltip.appendChild(arrow); tooltip.appendChild(inner); elem.parentNode.appendChild(tooltip);
+                new_tooltip.tip = tooltip; new_tooltip.elem = elem; tooltips.push(new_tooltip); return new_tooltip;
+            };
+            var validate_field = function(elem, remove) {
+                var value = elem.value, no_error = true;
+                remove ? remove_tooltip(elem) : false;
+                if (elem.type != 'checkbox') elem.className = elem.className.replace(/ ?_has_error ?/g, '');
+                if (elem.getAttribute('required') !== null) {
+                    if (elem.type == 'checkbox') {
+                        var elems = form_to_submit.elements[elem.name], found = false;
+                        no_error = true;
+                        for (var i = 0; i < elems.length; i++) {
+                            if (elems[i].getAttribute('required') === null) continue;
+                            if (!found && elems[i] !== elem) return true;
+                            found = true;
+                            if (!elems[i].checked) { no_error = false; elems[i].className = elems[i].className + ' _has_error'; }
+                        }
+                        if (!no_error) create_tooltip(elem, "Bitte die Datenschutzbestimmungen akzeptieren.");
+                    } else if (elem.tagName == 'SELECT') {
+                        var selected = true;
+                        for (var i = 0; i < elem.options.length; i++) {
+                            if (elem.options[i].selected && !elem.options[i].value) selected = false;
+                        }
+                        if (!selected) { elem.className += ' _has_error'; no_error = false; create_tooltip(elem, "Bitte auswählen."); }
+                    } else if (value === undefined || value === null || value === '') {
+                        elem.className += ' _has_error'; no_error = false; create_tooltip(elem, "Pflichtfeld.");
+                    }
+                }
+                if (no_error && elem.name == 'email') {
+                    if (!value.match(/^[\+_a-z0-9-'&=]+(\.[\+_a-z0-9-']+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/i)) {
+                        elem.className += ' _has_error'; no_error = false; create_tooltip(elem, "Gültige E-Mail eingeben.");
+                    }
+                }
+                return no_error;
+            };
+            var needs_validate = function(el) { return el.getAttribute('required') !== null || (el.name === 'email' && el.value !== ""); };
+            var validate_form = function(e) {
+                var no_error = true;
+                if (!submitted) {
+                    submitted = true;
+                    for (var i = 0; i < allInputs.length; i++) {
+                        var input = allInputs[i];
+                        if (needs_validate(input)) {
+                            if (input.type == 'text') { addEvent(input, 'blur', function() { this.value = this.value.trim(); validate_field(this, true); }); }
+                            else if (input.type == 'checkbox') { (function(el) { addEvent(el, 'change', function() { validate_field(el, true); }); })(input); }
+                            else if (input.tagName == 'SELECT') { addEvent(input, 'change', function() { validate_field(this, true); }); }
+                        }
+                    }
+                }
+                remove_tooltips();
+                for (var i = 0; i < allInputs.length; i++) {
+                    if (needs_validate(allInputs[i])) { if (allInputs[i].tagName.toLowerCase() !== "select") allInputs[i].value = allInputs[i].value.trim(); validate_field(allInputs[i]) ? true : no_error = false; }
+                }
+                if (!no_error && e) e.preventDefault();
+                return no_error;
+            };
+
+            var _form_serialize = function(form){if(!form||form.nodeName!=="FORM"){return}var i,j,q=[];for(i=0;i<form.elements.length;i++){if(form.elements[i].name===""){continue}switch(form.elements[i].nodeName){case"INPUT":switch(form.elements[i].type){case"text":case"number":case"date":case"time":case"hidden":case"password":case"submit":q.push(form.elements[i].name+"="+encodeURIComponent(form.elements[i].value));break;case"checkbox":case"radio":if(form.elements[i].checked){q.push(form.elements[i].name+"="+encodeURIComponent(form.elements[i].value))}break}break;case"TEXTAREA":q.push(form.elements[i].name+"="+encodeURIComponent(form.elements[i].value));break;case"SELECT":switch(form.elements[i].type){case"select-one":q.push(form.elements[i].name+"="+encodeURIComponent(form.elements[i].value));break;case"select-multiple":for(j=0;j<form.elements[i].options.length;j++){if(form.elements[i].options[j].selected){q.push(form.elements[i].name+"="+encodeURIComponent(form.elements[i].options[j].value))}}break}break}};return q.join("&")};
+
+            var form_submit = function(e) {
+                e.preventDefault();
+                if (validate_form()) {
+                    var submitButton = e.target.querySelector('#_form_5_submit');
+                    submitButton.disabled = true; submitButton.classList.add('processing');
+                    var serialized = _form_serialize(document.getElementById('_form_5_')).replace(/%0A/g, '\\n');
+                    _load_script('https://anders-consult.activehosted.com/proc.php?' + serialized + '&jsonp=true', null, true);
+                }
+                return false;
+            };
+            addEvent(form_to_submit, 'submit', form_submit);
+        })();
+
+        // ── Kontakt Form Handler ───────────────────────────
+        document.getElementById('kontaktForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const form = this;
+            const btn = form.querySelector('button[type="submit"]');
+            btn.textContent = 'Wird gesendet...'; btn.disabled = true;
+            const data = {
+                name: form.name.value, email: form.email.value,
+                unternehmen: form.unternehmen.value, betreff: form.betreff.value,
+                nachricht: form.nachricht.value, consent: form.consent.checked,
+                timestamp: new Date().toISOString()
+            };
+            try {
+                await fetch(WEBHOOK_KONTAKT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+                form.style.display = 'none'; document.getElementById('kontaktSuccess').classList.add('active');
+            } catch (err) {
+                form.style.display = 'none'; document.getElementById('kontaktSuccess').classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>
