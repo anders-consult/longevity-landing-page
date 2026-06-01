@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anders Consult · Helcyon Capital — Die Longevity-Lücke</title>
+    <title>Anders Consult · Helcyon Capital · Die Longevity-Lücke</title>
     <meta name="description" content="Strategieberatung für Hersteller und Handel, die die wichtigste neue Konsumgüterkategorie der nächsten Dekade gestalten wollen.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -338,14 +338,31 @@
             font-size: 1rem;
             color: var(--text-body);
             line-height: 1.7;
+            margin-bottom: 1.25rem;
+            max-width: 760px;
+        }
+        .leistungen-subtitle:last-of-type {
             margin-bottom: 3.5rem;
         }
-        .leistungen-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        /* Shared subgrid rows so corresponding rows align across both cards:
+           num · tag · heading · intro · label · bullets · tail
+           Each track grows to the taller card's content, so labels and bullet
+           rows stay parallel. Tail is bottom-anchored so CTAs align. */
+        .leistungen-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto auto auto auto auto 1fr;
+            gap: 2rem;
+        }
         .leistung-card {
             background: var(--cream);
             border: 1px solid rgba(0,0,0,0.05);
             border-radius: 4px;
             padding: 3rem;
+            display: grid;
+            grid-row: 1 / span 7;
+            grid-template-rows: subgrid;
+            row-gap: 0;
         }
         .leistung-num {
             font-family: var(--serif);
@@ -359,6 +376,7 @@
             letter-spacing: 0.22em; text-transform: uppercase;
             color: var(--blue-accent);
             margin-bottom: 1rem;
+            min-height: 2.1em;
         }
         .leistung-card h3 {
             font-family: var(--serif);
@@ -377,6 +395,23 @@
             color: var(--text-body);
             line-height: 1.7;
             margin-bottom: 2rem;
+        }
+        /* Intro paragraphs grouped into one shared track; the last paragraph
+           drops its bottom margin so the label track starts cleanly. */
+        .leistung-intro > .leistung-desc:last-child { margin-bottom: 0; }
+        .leistung-label {
+            font-family: var(--sans);
+            font-size: 0.9rem; font-weight: 600;
+            color: var(--text-dark);
+            line-height: 1.7;
+            margin-top: 1.25rem; margin-bottom: 0.5rem;
+        }
+        /* Tail (CTA + disclaimer) sits at the top of its shared track so the
+           buttons align across both cards regardless of disclaimer length. */
+        .leistung-tail {
+            align-self: start;
+            display: flex; flex-direction: column;
+            align-items: flex-start;
         }
         .leistung-list {
             list-style: none; display: flex; flex-direction: column;
@@ -696,7 +731,9 @@
             .about { padding: 4rem 1.5rem; }
             .team-grid { grid-template-columns: 1fr; }
             .leistungen { padding: 4rem 1.5rem; }
-            .leistungen-grid { grid-template-columns: 1fr; }
+            .leistungen-grid { grid-template-columns: 1fr; grid-template-rows: none; }
+            .leistung-card { display: block; grid-row: auto; }
+            .leistung-tail { align-self: auto; display: block; margin-top: 1rem; }
             .whitepaper { padding: 4rem 1.5rem; }
             .whitepaper-inner { grid-template-columns: 1fr; gap: 3rem; }
             .kontakt { padding: 4rem 1.5rem; }
@@ -736,7 +773,7 @@
             <p class="section-label section-label--light">Consumer Longevity Advisory</p>
             <h1 class="heading-xl">Wir schließen die<br>Longevity-<i>Lücke.</i></h1>
             <p class="hero-subtitle">
-                Strategieberatung für Hersteller und Handel, die die wichtigste neue Konsumgüterkategorie der nächsten Dekade gestalten wollen — nicht nur beobachten.
+                Strategieberatung für Hersteller und Handel, die die wichtigste neue Konsumgüterkategorie der nächsten Dekade gestalten wollen. Nicht nur beobachten.
             </p>
             <div class="hero-buttons">
                 <a href="#leistungen" class="btn btn--outline">Unsere Leistungen</a>
@@ -765,7 +802,7 @@
             <p class="section-label section-label--dark reveal">Über uns</p>
             <h2 class="heading-xl reveal">Zwei Perspektiven. <i>Eine Mission.</i></h2>
             <p class="about-intro reveal">
-                Consumer Longevity wird die wichtigste neue Konsumgüterkategorie der nächsten zehn Jahre — und sie wird nicht in den Spielregeln etablierter Kategorien gewonnen. Wir verbinden Konsumgüter-Erfahrung mit Longevity-Expertise, um Hersteller und Handel beim Aufbau dieser Kategorie zu begleiten.
+                Consumer Longevity wird die wichtigste neue Konsumgüterkategorie der nächsten zehn Jahre. Und sie wird nicht in den Spielregeln etablierter Kategorien gewonnen. Wir verbinden Konsumgüter-Erfahrung mit Longevity-Expertise, um Hersteller und Handel beim Aufbau dieser Kategorie zu begleiten.
             </p>
             <div class="team-grid">
                 <div class="team-card reveal">
@@ -809,40 +846,66 @@
             <p class="section-label section-label--dark reveal">Unsere Leistungen</p>
             <h2 class="heading-xl reveal">Zwei Wege, um die <i>Lücke</i> zu schließen.</h2>
             <p class="leistungen-subtitle reveal">
-                Wir verbinden tiefe Erfahrung im Konsumgüter-Mainstream mit unternehmerischer Expertise am Longevity-Frontier.
+                Longevity ist kein Trend. Es ist ein fundamentaler Wandel darin, wie Menschen Gesundheit, Alter und Lebensqualität verstehen. Die Konsumenten von heute optimieren aktiv: Schlaf, Energie, Kognition, Prävention. Sie kaufen keine Produkte mehr, sie bauen ein System.
+            </p>
+            <p class="leistungen-subtitle reveal">
+                Longevity ist nicht Anti-Aging. Nicht Biohacking für Technik-Enthusiasten. Nicht die nächste Wellness-Welle, die in drei Jahren wieder verschwindet.
+            </p>
+            <p class="leistungen-subtitle reveal">
+                Es ist die größte Neudefinition der Health-and-Beauty-Kategorie seit einer Generation.
             </p>
             <div class="leistungen-grid">
                 <div class="leistung-card reveal">
                     <div class="leistung-num">01</div>
                     <div class="leistung-tag">Für Longevity-Marken & Start-ups</div>
                     <h3>Werden Sie Teil der Kategorie-<i>Lösung.</i></h3>
-                    <p class="leistung-desc">
-                        Wir wählen <strong>3–5</strong> der vielversprechendsten Longevity-Marken für eine exklusive strategische Partnerschaft aus. Gemeinsam machen wir Ihre Marke retail-ready und stellen sicher, dass sie ein aktiver Akteur bei der Entwicklung der Longevity-Kategorie im Einzelhandel werden.
-                    </p>
+                    <div class="leistung-intro">
+                        <p class="leistung-desc" style="font-weight:500;">
+                            Wir wählen <strong>3–5</strong> der vielversprechendsten Longevity-Marken für eine exklusive strategische Partnerschaft aus und machen sie zu den Gewinnern der nächsten Handelswelle.
+                        </p>
+                        <p class="leistung-desc">
+                            Der Einzelhandel sucht Longevity-Marken, die funktionieren: im Regal, im Einkaufskorb und in der Wiederkaufrate. Wir identifizieren die Marken mit dem höchsten Potenzial und begleiten sie von der Positionierung bis zur Listung. Kein generisches Consulting, sondern eine echte strategische Partnerschaft mit Skin in the Game auf beiden Seiten. Plätze sind auf 3–5 Marken pro Kohorte begrenzt.
+                        </p>
+                    </div>
+                    <p class="leistung-label">Was Sie erhalten</p>
                     <ul class="leistung-list">
-                        <li>Positionierung für den stationären Handel</li>
-                        <li>Kategorie-Integration und Regalstrategie</li>
-                        <li>Retail-Readiness-Audit und Go-to-Market-Plan</li>
-                        <li>Zugang zu unserem Händler-Netzwerk</li>
-                        <li>Marken- und Kommunikationsstrategie für den Massenmarkt</li>
+                        <li>Retail-Readiness-Audit. Ehrliche Bestandsaufnahme: Was fehlt noch für den stationären Handel?</li>
+                        <li>Positionierung und Kategorieintegration. Ihr Platz im Regal, klar definiert und differenziert.</li>
+                        <li>Regal- und Sortimentsstrategie. Wie Sie in die Kategorie passen und sie gleichzeitig prägen.</li>
+                        <li>Go-to-Market-Plan. Konkrete Schritte, Timelines, Milestones.</li>
+                        <li>Zugang zu unserem Händlernetzwerk. Direkte Verbindungen zu den richtigen Einkäufern in DACH und in anderen europäischen Märkten.</li>
+                        <li>Marken- und Kommunikationsstrategie für den Massenmarkt. Botschaften, die im Handel ankommen.</li>
                     </ul>
-                    <a href="#kontakt" class="btn btn--dark">Für Partnerschaft bewerben →</a>
+                    <div class="leistung-tail">
+                        <a href="#kontakt" class="btn btn--dark">Für Partnerschaft bewerben</a>
+                        <p style="font-size:0.75rem; font-style:italic; color:var(--text-muted); margin-top:0.75rem; line-height:1.5;">Bewerbungen werden individuell geprüft. Wir arbeiten nur mit Marken, bei denen wir echtes Potenzial sehen.</p>
+                    </div>
                 </div>
                 <div class="leistung-card reveal" style="transition-delay: 0.12s;">
                     <div class="leistung-num">02</div>
-                    <div class="leistung-tag">Für CEOs & Geschäftsführer in Industrie & Handel</div>
+                    <div class="leistung-tag">Für CEOs und Geschäftsführer in Industrie und Handel</div>
                     <h3>Verstehen Sie das <i>Spielfeld.</i></h3>
-                    <p class="leistung-desc">
-                        Unser 90-minütiges „State of the Category" Executive Briefing liefert die externe Sicht, die Sie benötigen — datengestützt und ohne Ihre vertrauliche Strategie zu diskutieren.
-                    </p>
+                    <div class="leistung-intro">
+                        <p class="leistung-desc" style="font-weight:500;">
+                            Unser 90-minütiges "State of the Category" Executive Briefing liefert die externe Perspektive, die interne Teams nicht liefern können: datengestützt, kategoriefokussiert und ohne Ablenkung durch operative Tagesgeschäfte. Wir führen pro Quartal maximal <strong>4</strong> Executive Briefings durch.
+                        </p>
+                        <p class="leistung-desc">
+                            Sie verlassen das Briefing mit einem klaren Bild davon, wo die Kategorie steht, wer sie gerade neu definiert und welche strategischen Optionen sich daraus für Ihr Unternehmen ergeben.
+                        </p>
+                    </div>
+                    <p class="leistung-label">Inhalte des Briefings</p>
                     <ul class="leistung-list">
-                        <li>Marktdynamik und Wachstumsprojektionen</li>
-                        <li>Konsumentensegmente und Kaufverhalten</li>
-                        <li>Analyse der Disruptoren und neuen Player</li>
-                        <li>Distributionsmuster und Kanal-Shifts</li>
-                        <li>Strategische Handlungsoptionen</li>
+                        <li>Longevity Deep Dive. Terminologie, Wissenschaft und was sie für die Unternehmensstrategie bedeutet.</li>
+                        <li>Marktdynamik und Wachstumsprojektionen. Wo wächst die Kategorie und warum.</li>
+                        <li>Konsumentensegmente und Kaufverhalten. Wer kauft, was sie erwarten und wie sich das verändert.</li>
+                        <li>Analyse der Disruptoren und neuen Player. Wer die Kategorie gerade neu schreibt.</li>
+                        <li>Distributionsmuster und Kanal-Shifts. Wo die Kategorie gewonnen oder verloren wird.</li>
+                        <li>Strategische Implikationen. Was das konkret für Ihr Geschäftsmodell bedeutet.</li>
                     </ul>
-                    <a href="#kontakt" class="btn btn--dark">Executive Briefing anfragen →</a>
+                    <div class="leistung-tail">
+                        <a href="#kontakt" class="btn btn--dark">Termin sichern</a>
+                        <p style="font-size:0.75rem; font-style:italic; color:var(--text-muted); margin-top:0.75rem; line-height:1.5;">Das Briefing ist nicht öffentlich buchbar. Wir prüfen Anfragen individuell.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -858,53 +921,49 @@
                     16 Seiten Analyse, Marktdaten und eine konkrete 5-Schritte-Roadmap für Hersteller und Handel. Warum Consumer Longevity die wichtigste neue Konsumgüterkategorie der nächsten Dekade wird.
                 </p>
 
-                <img src="images/whitepaper-cover.jpg" alt="Die Longevity-Lücke — Whitepaper Cover" class="wp-cover-img">
+                <img src="images/whitepaper-cover.jpg" alt="Die Longevity-Lücke. Whitepaper Cover" class="wp-cover-img">
             </div>
 
             <div class="whitepaper-right reveal" style="transition-delay: 0.15s;">
                 <ul class="whitepaper-toc">
-                    <li><span class="toc-num">01</span><span class="toc-title">Vom Dinosaurier zum Einhorn — Eine Industrie im Wandel</span></li>
-                    <li><span class="toc-num">02</span><span class="toc-title">Was ist Longevity? — Lebensspanne, Gesundheitsspanne, 9 Hallmarks</span></li>
-                    <li><span class="toc-num">03</span><span class="toc-title">Die Anatomie einer neuen Kategorie — Distribution, Erlebnis, Erfolg</span></li>
-                    <li><span class="toc-num">04</span><span class="toc-title">Zukunftsmarkt Consumer Longevity — Marktdaten & Zielgruppen</span></li>
-                    <li><span class="toc-num">05</span><span class="toc-title">Die Roadmap — Fünf Schritte vom Reagieren zum Gestalten</span></li>
+                    <li><span class="toc-num">01</span><span class="toc-title">Vom Dinosaurier zum Einhorn. Eine Industrie im Wandel</span></li>
+                    <li><span class="toc-num">02</span><span class="toc-title">Was ist Longevity? Lebensspanne, Gesundheitsspanne, 9 Hallmarks</span></li>
+                    <li><span class="toc-num">03</span><span class="toc-title">Die Anatomie einer neuen Kategorie. Distribution, Erlebnis, Erfolg</span></li>
+                    <li><span class="toc-num">04</span><span class="toc-title">Zukunftsmarkt Consumer Longevity. Marktdaten & Zielgruppen</span></li>
+                    <li><span class="toc-num">05</span><span class="toc-title">Die Roadmap. Fünf Schritte vom Reagieren zum Gestalten</span></li>
                 </ul>
                 <!-- ActiveCampaign Official Embed -->
                 <div id="ac-form-container">
-<!-- Old CI overrides removed — new overrides loaded AFTER AC defaults below -->
+<style>
+/* CI Overrides only - applied on top of AC default styles */
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap");
+#_form_5_{background:rgba(255,255,255,0.04) !important;border:1px solid rgba(255,255,255,0.08) !important;border-radius:4px !important;padding:2.5rem !important;max-width:100% !important;color:#fff !important;margin:0 !important}
+#_form_5_ ._form-title{font-family:Georgia,serif !important;font-size:1.5rem !important;font-weight:700 !important;color:#fff !important;margin-bottom:2rem !important;padding:0 !important}
+#_form_5_ ._form-label{font-family:"IBM Plex Sans",sans-serif !important;font-size:0.65rem !important;font-weight:600 !important;letter-spacing:0.18em !important;text-transform:uppercase !important;color:#b0bec5 !important;margin-bottom:0.5rem !important}
+#_form_5_ input[type="text"],#_form_5_ select{font-family:"Open Sans",sans-serif !important;font-size:0.9rem !important;padding:0.85rem 1rem !important;border-radius:3px !important;border:1px solid rgba(255,255,255,0.12) !important;background:rgba(255,255,255,0.04) !important;color:#fff !important;height:auto !important}
+#_form_5_ input[type="text"]:focus,#_form_5_ select:focus{border-color:#4a7ab5 !important}
+#_form_5_ input::placeholder{color:#b0bec5 !important;opacity:0.5 !important}
+#_form_5_ ._form_element :is(textarea,select,input[type="text"]){color:#fff !important}
+#_form_5_ select{cursor:pointer !important;-webkit-appearance:none !important;appearance:none !important;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath fill='%236b92c4' d='M1.41 0L6 4.58 10.59 0 12 1.41l-6 6-6-6z'/%3E%3C/svg%3E") !important;background-repeat:no-repeat !important;background-position:right 1rem center !important}
+#_form_5_ select option{background:#1e2a3a !important;color:#fff !important}
+#_form_5_ ._form_element{margin-bottom:1.25rem !important}
+#_form_5_ ._row._checkbox-radio{display:flex !important;align-items:flex-start !important;gap:0.75rem !important;margin:1.5rem 0 !important}
+#_form_5_ input[type="checkbox"]{appearance:none !important;-webkit-appearance:none !important;width:18px !important;height:18px !important;min-width:18px !important;border:1px solid rgba(255,255,255,0.2) !important;border-radius:2px !important;background:rgba(255,255,255,0.04) !important;cursor:pointer !important;margin-top:2px !important;padding:0 !important}
+#_form_5_ input[type="checkbox"]:checked{background:#4a7ab5 !important;border-color:#4a7ab5 !important}
+#_form_5_ ._checkbox-radio span label,#_form_5_._inline-form ._row span:not(.field-required),#_form_5_._inline-form ._row label{font-family:"Open Sans",sans-serif !important;font-size:0.78rem !important;font-weight:400 !important;letter-spacing:0 !important;text-transform:none !important;color:#b0bec5 !important;line-height:1.5 !important}
+#_form_5_ ._form-fieldset{border:0 !important;padding:0 !important;margin:0 !important}
+#_form_5_ ._form-fieldset legend,#_form_5_ ._form-fieldset ._row:first-child{display:none !important}
+#_form_5_ ._submit{font-family:"Open Sans",sans-serif !important;font-size:0.9rem !important;font-weight:500 !important;width:100% !important;padding:1rem !important;background:#4a7ab5 !important;color:#fff !important;border:none !important;border-radius:3px !important}
+#_form_5_ ._submit:hover{background:#1e2a3a !important}
+#_form_5_ ._form-branding{display:none !important}
+#_form_5_ ._form-thank-you{font-family:Georgia,serif !important;color:#fff !important;opacity:1 !important}
+#_form_5_ ._field_header,#_form_5_ ._field_html{display:none !important}
+#_form_5_ .field-required{color:#4a7ab5 !important}
+#_form_5_ ._error-inner{background:#3a2020 !important;color:#e57373 !important}
+</style>
 <style>@import url(https://fonts.bunny.net/css?family=sans-serif:400|IBM+Plex+Sans:400);</style>
 <style>
 #_form_5_{font-size:14px;line-height:1.6;font-family:arial, helvetica, sans-serif;margin:0;box-shadow:none}._form_hide{display:none;visibility:hidden}._form_show{display:block;visibility:visible}#_form_5_._form-top{top:0}#_form_5_._form-bottom{bottom:0}#_form_5_._form-left{left:0}#_form_5_._form-right{right:0}#_form_5_ input[type="text"],#_form_5_ input[type="tel"],#_form_5_ input[type="date"],#_form_5_ textarea{padding:8px;height:auto;border:#979797 1px solid;border-radius:4px;color:#000 !important;font-size:14px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}#_form_5_ textarea{resize:none}#_form_5_ input::placeholder{color:#142341}#_form_5_ ._submit{cursor:pointer;font-family:arial, sans-serif;font-size:14px;text-align:center;background:#004CFF !important;border:0 !important;-moz-border-radius:4px !important;-webkit-border-radius:4px !important;border-radius:4px !important;color:#FFFFFF !important;padding:10px !important}#_form_5_ ._submit:disabled{cursor:not-allowed;opacity:0.4}#_form_5_ ._submit.processing{position:relative}#_form_5_ ._submit.processing::before{content:"";width:1em;height:1em;position:absolute;z-index:1;top:50%;left:50%;border:double 3px transparent;border-radius:50%;background-image:linear-gradient(#004CFF, #004CFF), conic-gradient(#004CFF, #FFFFFF);background-origin:border-box;background-clip:content-box, border-box;animation:1200ms ease 0s infinite normal none running _spin}#_form_5_ ._submit.processing::after{content:"";position:absolute;top:0;bottom:0;left:0;right:0}@keyframes _spin{0%{transform:translate(-50%, -50%) rotate(90deg)}100%{transform:translate(-50%, -50%) rotate(450deg)}}#_form_5_ ._form-branding{color:#fff;font-size:10px;clear:both;text-align:left;margin-top:30px;font-weight:100}#_form_5_ ._form-branding ._logo{display:block;width:130px;height:14px;margin-top:6px;background-image:url("https://d226aj4ao1t61q.cloudfront.net/hh9ujqgv5_aclogo_li.png");background-size:130px auto;background-repeat:no-repeat}#_form_5_ .form-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0, 0, 0, 0);border:0}#_form_5_ ._form-label,#_form_5_ ._form_element ._form-label{font-weight:bold;margin-bottom:5px;display:block}#_form_5_._dark ._form-branding{color:#333}#_form_5_._dark ._form-branding ._logo{background-image:url("https://d226aj4ao1t61q.cloudfront.net/jftq2c8s_aclogo_dk.png")}#_form_5_ ._form_element{position:relative;margin-bottom:10px;max-width:100%}#_form_5_ ._form_element *{font-size:14px}#_form_5_ ._form_element._clear{clear:both;width:100%;float:none}#_form_5_ ._form_element._clear:after{clear:left}#_form_5_ ._form_element :is(textarea, select, input[type="text"], input[type="date"], input[type="phone"], input[type="email"]),#_form_5_ ._form-element :is(textarea, select, input[type="text"], input[type="date"], input[type="phone"], input[type="email"]){color:#142341 !important;border-radius:0px}#_form_5_ ._form_element input[type="text"],#_form_5_ ._form_element input[type="date"],#_form_5_ ._form_element select,#_form_5_ ._form_element textarea:not(.g-recaptcha-response){display:block;width:100%;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;font-family:inherit}#_form_5_ ._field-wrapper{position:relative}#_form_5_ ._form_element ._form-fieldset{border:0;padding:0.01em 0 0 0;margin:0;min-width:0}#_form_5_ ._clear-element{clear:left}#_form_5_ ._full_width{width:100%}#_form_5_ input[type="text"]._has_error,#_form_5_ textarea._has_error{border:#F37C7B 1px solid}#_form_5_ input[type="checkbox"]._has_error{outline:#F37C7B 1px solid}#_form_5_ ._error{display:block;position:absolute;font-size:14px;z-index:10000001}#_form_5_ ._error._above{padding-bottom:4px;bottom:39px;right:0}#_form_5_ ._error._below{padding-top:8px;top:100%;right:0}#_form_5_ ._error._above ._error-arrow{bottom:-4px;right:15px;border-left:8px solid transparent;border-right:8px solid transparent;border-top:8px solid #FFDDDD}#_form_5_ ._error._below ._error-arrow{top:0;right:15px;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:8px solid #FFDDDD}#_form_5_ ._error-inner{padding:12px 12px 12px 36px;background-color:#FFDDDD;font-size:14px;font-family:arial, sans-serif;font-weight:600;line-height:16px;color:#000;border-radius:4px}#_form_5_ ._error-inner._form_error{margin-bottom:5px;text-align:left}#_form_5_ ._button-wrapper ._error-inner._form_error{position:static}#_form_5_ ._error-inner._no_arrow{margin-bottom:10px}#_form_5_ ._error-arrow{position:absolute;width:0;height:0}#_form_5_ ._form-title{font-family:sans-serif;font-size:24px;font-weight:400;color:black}#_form_5_{position:relative;text-align:left;margin:25px auto 0;padding:20px;box-sizing:border-box;background:#FFFFFF !important;border:0;max-width:500px;border-radius:0px !important;color:#000000}#_form_5_ ._form-thank-you{position:relative;left:0;right:0;text-align:center;font-size:18px}#_form_5_._inline-form,#_form_5_._inline-form ._form-content{font-family:sans-serif;font-size:14px;font-weight:400}#_form_5_._inline-form ._row span:not(.field-required),#_form_5_._inline-form ._row label{font-family:sans-serif;font-size:14px;font-weight:400;line-height:1.6em;color:black}#_form_5_._inline-form ._form-label{font-family:sans-serif;font-size:14px;font-weight:700;line-height:1.6em;color:black}#_form_5_._inline-form ._submit{margin-top:12px;font-family:sans-serif;font-size:14px;font-weight:400}#_form_5_._inline-form ._form-branding{font-family:"IBM Plex Sans", Helvetica, sans-serif;font-size:13px;font-weight:100}
-</style>
-<!-- CI Dark Theme Overrides — doubled ID selector beats AC defaults -->
-<style>
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap");
-#_form_5_#_form_5_{font-family:'Open Sans','Helvetica Neue',sans-serif !important;background:rgba(255,255,255,0.04) !important;border:1px solid rgba(255,255,255,0.08) !important;border-radius:4px !important;padding:2.5rem !important;max-width:100% !important;color:#fff !important;margin:0 !important;box-shadow:none !important;position:relative !important;text-align:left !important}
-#_form_5_#_form_5_ ._form-title,#_form_5_#_form_5_ h2{font-family:Georgia,serif !important;font-size:1.5rem !important;font-weight:700 !important;color:#fff !important;margin-bottom:2rem !important;padding:0 !important;line-height:1.3 !important}
-#_form_5_#_form_5_ ._form-label,#_form_5_#_form_5_ ._form_element ._form-label,#_form_5_#_form_5_._inline-form ._form-label{font-family:'IBM Plex Sans',sans-serif !important;font-size:0.65rem !important;font-weight:600 !important;letter-spacing:0.18em !important;text-transform:uppercase !important;color:#b0bec5 !important;margin-bottom:0.5rem !important;display:block !important;line-height:1.6em !important}
-#_form_5_#_form_5_ input[type="text"],#_form_5_#_form_5_ input[type="email"],#_form_5_#_form_5_ input[type="tel"],#_form_5_#_form_5_ textarea,#_form_5_#_form_5_ select,#_form_5_#_form_5_ ._form_element input[type="text"],#_form_5_#_form_5_ ._form_element select{width:100% !important;font-family:'Open Sans',sans-serif !important;font-size:0.9rem !important;padding:0.85rem 1rem !important;border-radius:3px !important;border:1px solid rgba(255,255,255,0.12) !important;background:rgba(255,255,255,0.04) !important;color:#fff !important;outline:none !important;transition:border-color 0.25s ease !important;-webkit-appearance:none !important;appearance:none !important;box-sizing:border-box !important;height:auto !important}
-#_form_5_#_form_5_ ._form_element :is(textarea,select,input[type="text"],input[type="date"],input[type="phone"],input[type="email"]),#_form_5_#_form_5_ ._form-element :is(textarea,select,input[type="text"],input[type="date"],input[type="phone"],input[type="email"]){color:#fff !important}
-#_form_5_#_form_5_ input[type="text"]:focus,#_form_5_#_form_5_ select:focus{border-color:#4a7ab5 !important}
-#_form_5_#_form_5_ input::placeholder,#_form_5_#_form_5_ textarea::placeholder{color:#b0bec5 !important;opacity:0.5 !important}
-#_form_5_#_form_5_ select{cursor:pointer !important;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath fill='%236b92c4' d='M1.41 0L6 4.58 10.59 0 12 1.41l-6 6-6-6z'/%3E%3C/svg%3E") !important;background-repeat:no-repeat !important;background-position:right 1rem center !important;padding-right:2.5rem !important}
-#_form_5_#_form_5_ select option{background:#1e2a3a !important;color:#fff !important}
-#_form_5_#_form_5_ ._form_element{margin-bottom:1.25rem !important}
-#_form_5_#_form_5_ ._form_element *{font-size:inherit !important}
-#_form_5_#_form_5_ ._field_header,#_form_5_#_form_5_ ._field_html{display:none !important}
-#_form_5_#_form_5_ ._row._checkbox-radio{display:flex !important;align-items:flex-start !important;gap:0.75rem !important;margin:1.5rem 0 !important}
-#_form_5_#_form_5_ input[type="checkbox"]{appearance:none !important;-webkit-appearance:none !important;width:18px !important;height:18px !important;min-width:18px !important;border:1px solid rgba(255,255,255,0.2) !important;border-radius:2px !important;background:rgba(255,255,255,0.04) !important;cursor:pointer !important;margin-top:2px !important;padding:0 !important;transition:all 0.2s ease !important}
-#_form_5_#_form_5_ input[type="checkbox"]:checked{background:#4a7ab5 !important;border-color:#4a7ab5 !important}
-#_form_5_#_form_5_ ._checkbox-radio span label,#_form_5_#_form_5_._inline-form ._row span:not(.field-required),#_form_5_#_form_5_._inline-form ._row label{font-family:'Open Sans',sans-serif !important;font-size:0.78rem !important;font-weight:400 !important;letter-spacing:0 !important;text-transform:none !important;color:#b0bec5 !important;line-height:1.5 !important}
-#_form_5_#_form_5_ ._checkbox-radio span label a{color:#4a7ab5 !important;text-decoration:underline !important}
-#_form_5_#_form_5_ ._form-fieldset{border:0 !important;padding:0 !important;margin:0 !important}
-#_form_5_#_form_5_ ._form-fieldset legend,#_form_5_#_form_5_ ._form-fieldset ._row:first-child{display:none !important}
-#_form_5_#_form_5_ .field-required{color:#4a7ab5 !important}
-#_form_5_#_form_5_ ._submit,#_form_5_#_form_5_ button[type="submit"]{font-family:'Open Sans',sans-serif !important;font-size:0.9rem !important;font-weight:500 !important;width:100% !important;padding:1rem !important;background:#4a7ab5 !important;color:#fff !important;border:none !important;border-radius:3px !important;cursor:pointer !important;transition:background 0.3s ease !important;text-align:center !important;margin-top:12px !important}
-#_form_5_#_form_5_ ._submit:hover{background:#3a6a9f !important}
-#_form_5_#_form_5_ ._error-inner{background:#3a2020 !important;color:#e57373 !important;font-family:'Open Sans',sans-serif !important;font-size:0.78rem !important}
-#_form_5_#_form_5_ ._form-thank-you{font-family:Georgia,serif !important;color:#fff !important;opacity:1 !important;text-align:center !important;padding:2rem 1rem !important}
-#_form_5_#_form_5_ ._form-branding{display:none !important}
-#_form_5_#_form_5_._inline-form,#_form_5_#_form_5_._inline-form ._form-content{font-family:'Open Sans',sans-serif !important;color:#fff !important}
 </style>
 <form method="POST" action="https://anders-consult.activehosted.com/proc.php" id="_form_5_" class="_form _form_5 _inline-form  _dark" novalidate data-styles-version="5">
   <input type="hidden" name="u" value="5" />
@@ -1199,7 +1258,7 @@ window._load_script = function(url, callback, isSubmit) {
                 <p class="section-label section-label--dark">Kontakt</p>
                 <h2 class="heading-xl">Lassen Sie uns die Kategorie <i>gemeinsam</i> besetzen.</h2>
                 <p class="kontakt-desc">
-                    Ob Executive Briefing, strategische Partnerschaft oder ein erstes Sondierungsgespräch — wir freuen uns auf den Austausch. Schreiben Sie uns direkt oder nutzen Sie das Kontaktformular.
+                    Ob Executive Briefing, strategische Partnerschaft oder ein erstes Sondierungsgespräch. Wir freuen uns auf den Austausch. Schreiben Sie uns direkt oder nutzen Sie das Kontaktformular.
                 </p>
                 <div class="kontakt-cards">
                     <div class="kontakt-person">
@@ -1260,8 +1319,8 @@ window._load_script = function(url, callback, isSubmit) {
     <footer class="footer">
         <div class="footer-brand">© 2026 Anders Consult · Helcyon Capital</div>
         <div class="footer-links">
-            <a href="#datenschutz">Datenschutz</a>
-            <a href="#impressum">Impressum</a>
+            <a href="datenschutz.html">Datenschutz</a>
+            <a href="impressum.html">Impressum</a>
         </div>
     </footer>
 
