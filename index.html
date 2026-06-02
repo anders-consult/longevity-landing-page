@@ -305,29 +305,25 @@
         }
         .logos-list {
             display: flex; flex-wrap: nowrap;
-            gap: 1.75rem;
+            gap: 1.1rem;
             align-items: center;
-            justify-content: space-between;
-            width: 100%;
+            justify-content: flex-start;
         }
         .logos-list img {
-            height: 24px;
+            height: 16px;
             width: auto;
-            max-width: 100%;
             object-fit: contain;
             opacity: 0.55;
             transition: opacity 0.3s;
-            flex: 0 1 auto;
-            min-width: 0;
+            flex: 0 0 auto;
         }
         /* Cap the very wide wordmarks so they don't dominate the row */
         .logos-list img[alt="Johnson & Johnson"],
         .logos-list img[alt="Helcyon Capital"] {
-            height: 20px;
-            max-width: 170px;
+            height: 13px;
         }
         .logos-list img[alt=""] { /* the M mark is narrow; keep modest */
-            max-width: 24px;
+            height: 16px;
         }
         .logos-list img:hover {
             opacity: 0.9;
@@ -759,10 +755,10 @@
             .hero h1 { font-size: 2.4rem; }
             .about { padding: 4rem 1.5rem; }
             .team-grid { grid-template-columns: 1fr; }
-            .logos-list { flex-wrap: wrap; justify-content: flex-start; gap: 1.25rem 2rem; }
-            .logos-list img { height: 22px; }
+            .logos-list { flex-wrap: wrap; justify-content: flex-start; gap: 0.9rem 1.1rem; }
+            .logos-list img { height: 15px; }
             .logos-list img[alt="Johnson & Johnson"],
-            .logos-list img[alt="Helcyon Capital"] { height: 20px; max-width: none; }
+            .logos-list img[alt="Helcyon Capital"] { height: 13px; }
             .leistungen { padding: 4rem 1.5rem; }
             .leistungen-grid { grid-template-columns: 1fr; grid-template-rows: none; }
             .leistung-card { display: block; grid-row: auto; }
