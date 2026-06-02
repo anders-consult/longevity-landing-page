@@ -304,26 +304,17 @@
             margin-bottom: 1.5rem;
         }
         .logos-list {
-            display: flex; flex-wrap: nowrap;
-            gap: 1.1rem;
+            display: flex;
             align-items: center;
             justify-content: flex-start;
         }
         .logos-list img {
-            height: 16px;
-            width: auto;
+            height: auto;
+            width: 100%;
+            max-width: 720px;
             object-fit: contain;
-            opacity: 0.55;
+            opacity: 0.7;
             transition: opacity 0.3s;
-            flex: 0 0 auto;
-        }
-        /* Cap the very wide wordmarks so they don't dominate the row */
-        .logos-list img[alt="Johnson & Johnson"],
-        .logos-list img[alt="Helcyon Capital"] {
-            height: 13px;
-        }
-        .logos-list img[alt=""] { /* the M mark is narrow; keep modest */
-            height: 16px;
         }
         .logos-list img:hover {
             opacity: 0.9;
@@ -755,10 +746,7 @@
             .hero h1 { font-size: 2.4rem; }
             .about { padding: 4rem 1.5rem; }
             .team-grid { grid-template-columns: 1fr; }
-            .logos-list { flex-wrap: wrap; justify-content: flex-start; gap: 0.9rem 1.1rem; }
-            .logos-list img { height: 15px; }
-            .logos-list img[alt="Johnson & Johnson"],
-            .logos-list img[alt="Helcyon Capital"] { height: 13px; }
+            .logos-list img { width: 100%; max-width: 100%; }
             .leistungen { padding: 4rem 1.5rem; }
             .leistungen-grid { grid-template-columns: 1fr; grid-template-rows: none; }
             .leistung-card { display: block; grid-row: auto; }
@@ -856,15 +844,7 @@
             <div class="logos-section reveal">
                 <div class="logos-label">Berufliche Stationen & Erfahrungen</div>
                 <div class="logos-list">
-                    <img src="images/logo-henkel.png" alt="Henkel">
-                    <img src="images/logo-loreal.png" alt="L'Oréal">
-                    <img src="images/logo-estee_lauder.png" alt="Estée Lauder Companies">
-                    <img src="images/logo-philip_morris.png" alt="Philip Morris International">
-                    <img src="images/logo-johnson_johnson.png" alt="Johnson & Johnson">
-                    <img src="images/logo-kenvue.png" alt="Kenvue">
-                    <img src="images/logo-alpex_pharma.png" alt="Alpex Pharma">
-                    <img src="images/logo-m_logo.png" alt="">
-                    <img src="images/logo-helcyon_capital.png" alt="Helcyon Capital">
+                    <img src="images/logos.png" alt="Henkel · L'Oréal · Estée Lauder · Philip Morris International · Johnson & Johnson · Kenvue · Alpex · Helcyon Capital">
                 </div>
             </div>
         </div>
