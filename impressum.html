@@ -61,13 +61,20 @@
             text-transform: uppercase;
             color: var(--text-light);
         }
-        .nav-back {
+        .nav-links { display: flex; align-items: center; gap: 2.5rem; list-style: none; }
+        .nav-links a {
             font-family: var(--sans);
-            font-size: 0.85rem;
-            color: var(--text-light);
-            transition: color 0.25s;
+            font-size: 0.85rem; font-weight: 400;
+            color: var(--text-light); transition: color 0.25s;
         }
-        .nav-back:hover { color: var(--white); }
+        .nav-links a:hover { color: var(--white); }
+        .nav-back {
+            font-size: 0.82rem !important;
+            padding: 0.5rem 1.4rem;
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 2px; transition: all 0.25s !important;
+        }
+        .nav-back:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.4); }
 
         /* ── PAGE HEAD ── */
         .page-head {
@@ -141,6 +148,8 @@
 
         @media (max-width: 768px) {
             .nav { padding: 1rem 1.5rem; }
+            .nav-links { gap: 1.25rem; }
+            .nav-brand { display: none; }
             .page-head { padding: 7rem 1.5rem 3rem; }
             .content { padding: 3rem 1.5rem 4rem; }
             .footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
@@ -151,7 +160,11 @@
 
     <nav class="nav">
         <div class="nav-brand">Anders Consult · Helcyon Capital</div>
-        <a href="index.html" class="nav-back">← Zur Startseite</a>
+        <ul class="nav-links">
+            <li><a href="index.html#kontakt">Kontakt</a></li>
+            <li><a href="datenschutz.html">Datenschutz</a></li>
+            <li><a href="index.html" class="nav-back">Zur Startseite</a></li>
+        </ul>
     </nav>
 
     <header class="page-head">
